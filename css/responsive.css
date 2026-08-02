@@ -1,0 +1,173 @@
+@media (max-width: 1024px) {
+  .security__sticky {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-block: 110px 40px;
+    align-content: start;
+  }
+
+  .security__title {
+    font-size: var(--fs-3xl);
+    margin-bottom: 26px;
+  }
+
+  .security__progress {
+    flex-direction: row;
+    gap: 18px;
+  }
+
+  .security__stages {
+    height: min(480px, 60vh);
+  }
+
+  .sec-item {
+    padding: 34px 30px;
+  }
+
+  .demo__panel {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
+
+  .demo__stage {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero__subtitle {
+    font-size: var(--fs-base);
+  }
+
+  .hero__stats {
+    gap: 28px;
+    margin-top: 52px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    height: 180vh;
+  }
+
+  .brand__barrage-line--1 {
+    font-size: 2rem;
+  }
+
+  .brand__barrage-line--3 {
+    font-size: 2.4rem;
+  }
+
+  .intro {
+    padding-block: 100px 110px;
+  }
+
+  .intro__grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .intro__lead {
+    position: static;
+  }
+
+  .challenges {
+    padding-block: 90px 100px;
+  }
+
+  .challenges__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo {
+    padding-block: 100px 110px;
+  }
+
+  .security {
+    height: auto;
+  }
+
+  .security__sticky {
+    position: static;
+    height: auto;
+    padding-block: 90px 70px;
+  }
+
+  .security__stages {
+    height: auto;
+    margin-top: 8px;
+  }
+
+  .sec-item {
+    position: relative;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    display: none;
+  }
+
+  .sec-item.is-active {
+    display: flex;
+  }
+
+  .integration {
+    padding-block: 110px 90px;
+  }
+
+  .integration__steps {
+    grid-template-columns: 1fr;
+  }
+
+  .integration__cta {
+    padding: 48px 24px;
+  }
+
+  .footer__top {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .footer__links {
+    gap: 28px;
+  }
+
+  .footer__bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .loader.phase-border .loader__frame {
+    border-width: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__actions .btn {
+    width: 100%;
+  }
+
+  .footer__links {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand__barrage-line {
+    animation: none !important;
+  }
+
+  .island__menu {
+    transition: none;
+  }
+
+  .island__menu .island__link,
+  .island__menu .island__menu-cta {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .island.is-open .glass__highlight::after {
+    display: none;
+  }
+}

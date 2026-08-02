@@ -1,0 +1,132 @@
+.demo {
+  position: relative;
+  padding-block: 140px 150px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.demo__head {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.demo__title {
+  font-size: var(--fs-4xl);
+  font-weight: 800;
+}
+
+.demo__desc {
+  max-width: 640px;
+  margin: 18px auto 0;
+  color: var(--text-2);
+}
+
+.demo__desc code {
+  font-size: 0.86em;
+  color: var(--accent);
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.demo__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 420px) 1fr;
+  gap: clamp(28px, 4vw, 60px);
+  align-items: start;
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+.demo__stage {
+  position: relative;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 28px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 22px;
+  overflow: hidden;
+}
+
+.demo__widget {
+  position: relative;
+  z-index: 1;
+}
+
+.demo__status {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  min-height: 1em;
+}
+
+.demo__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.demo__controls-label {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.demo__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.demo__tabs button {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  background: transparent;
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s var(--ease-out);
+}
+
+.demo__tabs button:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.demo__tabs button[aria-selected='true'] {
+  color: #07142b;
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: none;
+}
+
+.demo__run {
+  align-self: flex-start;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  background: transparent;
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-out);
+}
+
+.demo__run:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}

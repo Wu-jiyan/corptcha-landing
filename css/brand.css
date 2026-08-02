@@ -1,0 +1,173 @@
+/* 品牌跑马灯段 */
+.brand {
+  position: relative;
+  height: 220vh;
+  background: var(--bg-deep);
+}
+
+.brand__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.brand__barrage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 34px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.brand__barrage-line {
+  display: flex;
+  gap: 48px;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  will-change: transform;
+}
+
+.brand__barrage-line span {
+  flex-shrink: 0;
+}
+
+.brand__barrage-line--1 {
+  font-size: clamp(2.4rem, 3.5vw, 4.4rem);
+  opacity: 0.22;
+}
+
+.brand__barrage-line--2 {
+  font-size: clamp(1.6rem, 2.4vw, 2.8rem);
+  opacity: 0.42;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.brand__barrage-line--3 {
+  font-size: clamp(3rem, 5vw, 6rem);
+  opacity: 0.75;
+}
+
+.brand__center {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  will-change: transform, filter;
+}
+
+.brand__logo-img {
+  width: min(460px, 62vw);
+  height: auto;
+  content: var(--logo-src);
+  filter: drop-shadow(0 18px 44px rgba(0, 0, 0, 0.3));
+}
+
+.brand__viewfinder {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(560px, 72vw);
+  height: 170px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vf {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-color: var(--accent);
+  border-style: solid;
+}
+
+.vf--tl { border-width: 2px 0 0 2px; top: 0; left: 0; }
+.vf--tr { border-width: 2px 2px 0 0; top: 0; right: 0; }
+.vf--bl { border-width: 0 0 2px 2px; bottom: 0; left: 0; }
+.vf--br { border-width: 0 2px 2px 0; bottom: 0; right: 0; }
+
+.brand__mask {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 250vmax;
+  height: 250vmax;
+  background: var(--bg);
+  border-radius: 0;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  z-index: 8;
+}
+
+/* 产品简介段 */
+.intro {
+  position: relative;
+  padding-block: 140px 160px;
+  background: var(--bg);
+  overflow-x: clip;
+}
+
+.intro__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(48px, 6vw, 90px);
+  align-items: start;
+}
+
+.intro__lead {
+  position: sticky;
+  top: 140px;
+}
+
+.intro__title {
+  font-size: var(--fs-3xl);
+  font-weight: 800;
+  line-height: var(--lh-tight);
+}
+
+.intro__points {
+  display: flex;
+  flex-direction: column;
+  gap: 46px;
+}
+
+.intro__point {
+  position: relative;
+  padding: 30px 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.intro__point-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.intro__point h3 {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.intro__point p {
+  color: var(--text-2);
+  font-size: var(--fs-base);
+}
