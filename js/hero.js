@@ -164,4 +164,38 @@
   } else {
     requestAnimationFrame(tick);
   }
+
+  /* ---------- 标语打字机：多条循环，退格重输 ---------- */
+  const typeEl = document.getElementById('heroType');
+  if (typeEl) {
+    const phrases = [
+      '面向 AI 时代的人机验证系统',
+      '行为轨迹预判，8 种对抗式挑战',
+      '可解释风险引擎，低风险直接放行',
+      'PoW 工作量证明，机器无路可走',
+    ];
+    if (reduced) {
+      typeEl.textContent = phrases[0];
+    } else {
+      const rand = (min, max) => Math.round(min + Math.random() * (max - min));
+      const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+      let index = 0;
+      async function loop() {
+        const phrase = phrases[index];
+        for (let i = 1; i <= phrase.length; i++) {
+          typeEl.textContent = phrase.slice(0, i);
+          await sleep(rand(70, 140));
+        }
+        await sleep(rand(1800, 2400));
+        for (let i = phrase.length - 1; i >= 0; i--) {
+          typeEl.textContent = phrase.slice(0, i);
+          await sleep(rand(40, 70));
+        }
+        await sleep(rand(400, 700));
+        index = (index + 1) % phrases.length;
+        loop();
+      }
+      loop();
+    }
+  }
 })();

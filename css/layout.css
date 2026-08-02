@@ -113,7 +113,7 @@
 
 .loader__skip {
   position: absolute;
-  top: 24px;
+  bottom: 24px;
   right: 28px;
   z-index: 20;
   display: inline-flex;
@@ -199,35 +199,38 @@
   inset: 0;
   z-index: 4;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s, background 0.3s;
 }
 
-.loader.phase-light-g .loader__light {
-  opacity: 1;
+.loader__light-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.loader__light-layer[data-layer='g'] {
   background: linear-gradient(195deg, #ffffff59 0%, #0000 50%);
 }
 
-.loader.phase-light-el .loader__light {
-  opacity: 1;
+.loader__light-layer[data-layer='el'] {
   background: linear-gradient(195deg, #ffffff40 0%, #0000 60%);
 }
 
-.loader.phase-light-x .loader__light {
-  opacity: 1;
+.loader__light-layer[data-layer='x'] {
   background: linear-gradient(195deg, #ffffff26 0%, #0000 70%);
 }
 
-.loader.phase-light-elin .loader__light,
-.loader.phase-light-full .loader__light {
-  opacity: 1;
+.loader__light-layer[data-layer='elin'] {
   background: radial-gradient(at 40%, #ffffff4d 0%, #0000 60%);
 }
 
-.loader.phase-glow .loader__light {
-  opacity: 1;
+.loader__light-layer[data-layer='full'] {
+  background: radial-gradient(at 40%, #ffffff73 0%, #0000 60%);
+}
+
+.loader__light-layer[data-layer='glow'] {
   background: radial-gradient(at 45%, #ffffffd9 0%, #fff3 50%, #0000 80%);
-  transition: opacity 0.6s;
+  transition: opacity 0.6s ease;
 }
 
 .loader__brand {

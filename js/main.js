@@ -17,6 +17,7 @@
     const canvas = document.getElementById('loaderGlitch');
     const tag = document.getElementById('loaderTag');
     const ctx = canvas ? canvas.getContext('2d') : null;
+    const lightLayers = Array.prototype.slice.call(document.querySelectorAll('.loader__light-layer'));
 
     const W = window.innerWidth;
     const H = window.innerHeight;
@@ -69,9 +70,25 @@
       timers.push(setTimeout(fn, ms));
     }
 
+    const LIGHT_MAP = {
+      'phase-light-g': 'g',
+      'phase-light-el': 'el',
+      'phase-light-x': 'x',
+      'phase-light-elin': 'elin',
+      'phase-light-full': 'full',
+      'phase-glow': 'glow'
+    };
+
+    function setLight(layer) {
+      lightLayers.forEach(function (el) {
+        el.style.opacity = el.dataset.layer === layer ? '1' : '0';
+      });
+    }
+
     function setPhase(p) {
       loader.classList.remove.apply(loader.classList, PHASES);
       if (p) loader.classList.add(p);
+      setLight(LIGHT_MAP[p] || null);
     }
 
     /* 相位切换：glitch 块 → 收边框 → 渐进点亮 → 辉光 → 淡出 */
@@ -127,6 +144,7 @@
       if (canvas) canvas.style.display = 'none';
       loader.classList.remove.apply(loader.classList, PHASES);
       loader.classList.add('is-scene', 'is-tag', 'phase-glow');
+      setLight('glow');
       loader.classList.add('is-done');
       document.documentElement.classList.remove('is-loading');
       body.style.overflow = '';

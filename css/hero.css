@@ -68,6 +68,7 @@
   font-size: var(--fs-lg);
   color: var(--text-2);
   line-height: var(--lh-relaxed);
+  min-height: 2.2em;
 }
 
 .hero__actions {
