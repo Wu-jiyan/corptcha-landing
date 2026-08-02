@@ -1,34 +1,30 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
-const file = join(import.meta.dirname, '..', 'index.html');
+const root = join(import.meta.dirname, '..');
+const files = ['zh/index.html', 'en/index.html'];
 const mode = process.argv[2];
+const version = process.argv[3] || '1';
 const CDN = '//res.25y.cn/corptcha/landing/';
 
 if (mode !== 'local' && mode !== 'cdn') {
-  console.error('用法: node tools/switch-res.js <local|cdn>');
+  console.error('用法: node tools/switch-res.js <local|cdn> [版本号]');
   process.exit(1);
 }
 
-let html = readFileSync(file, 'utf8');
+for (const rel of files) {
+  const file = join(root, rel);
+  let html = readFileSync(file, 'utf8');
 
-const pairs = [
-  ['href="', 'css/'],
-  ['src="', 'js/'],
-  ['src="', 'vendor/'],
-  ['href="', 'assets/'],
-  ['src="', 'assets/'],
-];
+  // 归一化：去掉 ../ 前缀、CDN 前缀与 ?v= 参数
+  html = html.replace(/((?:href|src)=")(?:\.\.\/)?(?:res\.25y\.cn\/corptcha\/landing\/)?(css|js|assets|vendor)\/([^"?]+)(?:\?v=[^"]*)?(")/g, '$1$2/$3$4');
 
-for (const [prefix, rel] of pairs) {
-  const local = prefix + rel;
-  const remote = prefix + CDN + rel;
-  if (mode === 'local') {
-    html = html.split(remote).join(local);
+  if (mode === 'cdn') {
+    html = html.replace(/((?:href|src)=")(css|js|assets|vendor)\/([^"]+)/g, '$1' + CDN + '$2/$3?v=' + version);
   } else {
-    html = html.split(local).join(remote);
+    html = html.replace(/((?:href|src)=")(css|js|assets|vendor)\//g, '$1../$2/');
   }
-}
 
-writeFileSync(file, html);
-console.log('index.html 资源引用已切换为: ' + (mode === 'local' ? '本地相对路径' : '资源站 ' + CDN));
+  writeFileSync(file, html);
+  console.log(rel + ' -> ' + (mode === 'local' ? '本地 ../' : CDN + ' (v' + version + ')'));
+}
