@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Corptcha — Human Verification for the AI Era</title>
+<meta name="description" content="Corptcha human-verification system: 8 adversarial challenge types, behavioral analysis, Proof-of-Work and an explainable risk engine. The widget below is rendered by the real SDK — interactive." />
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('corptcha-theme');
+      var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = saved && saved !== 'auto' ? saved : dark ? 'dark' : 'light';
+      document.documentElement.dataset.themePref = saved || 'auto';
+    } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+  })();
+</script>
+<link rel="icon" type="image/png" href="../assets/icon.png" />
+<link rel="canonical" href="https://www.corptcha.com/en/" />
+<link rel="alternate" hreflang="zh-CN" href="https://www.corptcha.com/zh/" />
+<link rel="alternate" hreflang="en" href="https://www.corptcha.com/en/" />
+<link rel="alternate" hreflang="x-default" href="https://www.corptcha.com/" />
+<meta name="robots" content="index,follow" />
+<meta name="theme-color" content="#f2f5f1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0a0d0c" media="(prefers-color-scheme: dark)" />
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+<link rel="manifest" href="../manifest.json" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Corptcha" />
+<meta property="og:title" content="Corptcha — Human Verification for the AI Era" />
+<meta property="og:description" content="Behavioral pre-screening, 8 adversarial challenges, Proof-of-Work and an explainable risk engine. Low-risk users pass instantly; bots get nowhere." />
+<meta property="og:url" content="https://www.corptcha.com/en/" />
+<meta property="og:image" content="https://www.corptcha.com/assets/og.png" />
+<meta property="og:locale" content="en" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Corptcha — Human Verification for the AI Era" />
+<meta name="twitter:description" content="Behavioral pre-screening, 8 adversarial challenges, Proof-of-Work and an explainable risk engine. Low-risk users pass instantly; bots get nowhere." />
+<meta name="twitter:image" content="https://www.corptcha.com/assets/og.png" />
+<link rel="preload" href="../assets/fonts/red-hat-display-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../assets/fonts/red-hat-display-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "Corptcha",
+      "alternateName": "Corptcha Human Verification",
+      "url": "https://www.corptcha.com/",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Corptcha",
+      "url": "https://www.corptcha.com/en/",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Web",
+      "description": "A human-verification system for the AI era: behavioral pre-screening, 8 adversarial challenges, Proof-of-Work and an explainable risk engine.",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Corptcha?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A human-verification system for the AI era: behavioral pre-screening, 8 adversarial challenges and Proof-of-Work. Low-risk users pass instantly; challenges are only issued to suspicious traffic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I integrate Corptcha?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sign up for a siteKey, load the SDK on the frontend to render the widget, and verify the verification token on your backend. Integration takes minutes — see the guide below."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Corptcha open source?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The core is open source and can be self-hosted with a one-command Docker deploy; your data never leaves your network."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is verification data stored?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When self-hosted, verification data lives only in your own infrastructure with no third-party dependencies."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does it affect user experience and performance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Low-risk users pass instantly via behavioral pre-screening. Proof-of-Work and challenges only apply to suspicious traffic, so real visitors barely notice."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="../css/base.css" />
+<link rel="stylesheet" href="../css/layout.css" />
+<link rel="stylesheet" href="../css/hero.css" />
+<link rel="stylesheet" href="../css/brand.css" />
+<link rel="stylesheet" href="../css/demo.css" />
+<link rel="stylesheet" href="../css/challenges.css" />
+<link rel="stylesheet" href="../css/security.css" />
+<link rel="stylesheet" href="../css/integration.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="liquid_glass_filter" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.028" numOctaves="2" seed="7" result="n"></feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+      <feGaussianBlur stdDeviation="3.5"></feGaussianBlur>
+    </filter>
+    <filter id="liquid_glass_chroma" x="-3%" y="-3%" width="106%" height="106%" color-interpolation-filters="sRGB">
+      <feOffset in="SourceGraphic" dx="1.2" dy="1.0" result="r"></feOffset>
+      <feOffset in="SourceGraphic" dx="-1.2" dy="-1.0" result="b"></feOffset>
+      <feColorMatrix in="r" type="matrix" result="ro" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"></feColorMatrix>
+      <feColorMatrix in="SourceGraphic" type="matrix" result="go" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"></feColorMatrix>
+      <feColorMatrix in="b" type="matrix" result="bo" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"></feColorMatrix>
+      <feBlend in="ro" in2="go" mode="screen" result="rg"></feBlend>
+      <feBlend in="rg" in2="bo" mode="screen"></feBlend>
+    </filter>
+  </defs>
+</svg>
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <button class="loader__skip" id="loaderSkip" type="button" aria-label="Skip intro">
+    <span>Click anywhere to skip</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M6 5v14M15.5 12 6 5v14z"/></svg>
+  </button>
+  <canvas class="loader__glitch" id="loaderGlitch"></canvas>
+  <div class="loader__scene" id="loaderScene">
+    <div class="loader__frame"></div>
+    <div class="loader__light" aria-hidden="true">
+      <i class="loader__light-layer" data-layer="g"></i>
+      <i class="loader__light-layer" data-layer="el"></i>
+      <i class="loader__light-layer" data-layer="x"></i>
+      <i class="loader__light-layer" data-layer="elin"></i>
+      <i class="loader__light-layer" data-layer="full"></i>
+      <i class="loader__light-layer" data-layer="glow"></i>
+    </div>
+    <div class="loader__brand">
+      <img class="loader__logo" src="../assets/logo-dark.png" alt="Corptcha" />
+    </div>
+    <p class="loader__tag" id="loaderTag">
+      <span class="tw">T</span><span class="tw">H</span><span class="tw">I</span><span class="tw">S</span><span class="tw-gap" aria-hidden="true"></span><span class="tw">I</span><span class="tw">S</span><span class="tw-gap" aria-hidden="true"></span><span class="tw">C</span><span class="tw tw--accent">O</span><span class="tw">R</span><span class="tw">P</span><span class="tw">T</span><span class="tw">C</span><span class="tw">H</span><span class="tw">A</span>
+    </p>
+  </div>
+</div>
+
+<div class="bg-aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="island" id="siteNav">
+  <div class="glass" aria-hidden="true">
+    <div class="glass__outer"></div>
+    <div class="glass__chroma"></div>
+    <div class="glass__cover"></div>
+    <div class="glass__reflect"></div>
+    <div class="glass__sharp"></div>
+    <div class="glass__highlight"></div>
+  </div>
+  <div class="island__inner">
+    <a class="island__logo" href="#top" aria-label="Corptcha home">
+      <img class="island__logo-img" src="../assets/logo.png" alt="Corptcha" />
+      <img class="island__logo-icon" src="../assets/icon.png" alt="" />
+    </a>
+    <nav class="island__nav" aria-label="Primary">
+      <a class="island__link" href="#demo">Live demo</a>
+      <a class="island__link" href="#challenges">Challenges</a>
+      <a class="island__link" href="#security">Security</a>
+      <a class="island__link" href="#integration">Integration</a>
+    </nav>
+    <div class="island__actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+        <svg class="theme-toggle__icon theme-toggle__icon--monitor" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12" rx="1.5"/><path d="M8 20.5h8M12 16.5v4"/></svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6"/></svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+      </button>
+      <a class="island__lang" href="../zh/" hreflang="zh-CN" lang="zh-CN" data-lang="zh">中文</a>
+      <a class="island__cta" href="#integration"><span>Get started</span></a>
+      <button class="island__burger" id="burgerBtn" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="island__menu" id="mobileMenu">
+    <div class="island__menu-inner">
+      <a class="island__link" href="#demo">Live demo</a>
+      <a class="island__link" href="#challenges">Challenges</a>
+      <a class="island__link" href="#security">Security</a>
+      <a class="island__link" href="#integration">Integration</a>
+      <a class="island__menu-cta" href="#integration"><span>Get started</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="hero__sticky">
+      <div class="hero__frame" id="heroFrame">
+        <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+        <div class="hero__content">
+          <h1 class="hero__title reveal">Corptcha: leave AI stumped.<br />Let humans through.</h1>
+          <p class="hero__subtitle reveal"><span class="hero__type" id="heroType">Human verification for the AI era</span><span class="hero__caret" aria-hidden="true">_</span></p>
+          <div class="hero__actions reveal">
+            <a class="btn btn--primary" href="#demo"><span>Try it live</span> <span aria-hidden="true">→</span></a>
+            <a class="btn btn--ghost" href="#integration"><span>Integration guide</span></a>
+          </div>
+          <dl class="hero__stats reveal">
+            <div class="hero__stat"><dt>8</dt><dd>challenge types</dd></div>
+            <div class="hero__stat"><dt>4</dt><dd>defense layers</dd></div>
+            <div class="hero__stat"><dt>1</dt><dd>use token</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="brand" id="brand">
+    <div class="brand__sticky">
+      <div class="brand__barrage" aria-hidden="true">
+        <div class="brand__barrage-line brand__barrage-line--1"><span>HUMAN VS MACHINE</span><span>HUMAN VS MACHINE</span><span>HUMAN VS MACHINE</span><span>HUMAN VS MACHINE</span><span>HUMAN VS MACHINE</span><span>HUMAN VS MACHINE</span></div>
+        <div class="brand__barrage-line brand__barrage-line--2"><span>BEHAVIOR · POW · RISK ENGINE</span><span>BEHAVIOR · POW · RISK ENGINE</span><span>BEHAVIOR · POW · RISK ENGINE</span></div>
+        <div class="brand__barrage-line brand__barrage-line--3"><span>NO BOTS ALLOWED</span><span>NO BOTS ALLOWED</span><span>NO BOTS ALLOWED</span><span>NO BOTS ALLOWED</span><span>NO BOTS ALLOWED</span><span>NO BOTS ALLOWED</span></div>
+      </div>
+      <div class="brand__center">
+        <img class="brand__logo-img" src="../assets/logo.png" alt="Corptcha" />
+        <div class="brand__viewfinder" aria-hidden="true">
+          <i class="vf vf--tl"></i><i class="vf vf--tr"></i><i class="vf vf--bl"></i><i class="vf vf--br"></i>
+        </div>
+      </div>
+      <div class="brand__mask" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="intro" id="intro">
+    <div class="container intro__grid">
+      <div class="intro__lead reveal-left">
+        <h2 class="intro__title">The endgame of captchas:<br />make machines do the thinking.</h2>
+      </div>
+      <div class="intro__points">
+        <div class="intro__point reveal-right">
+          <span class="intro__point-num">01</span>
+          <h3>Behavior first, challenge as fallback</h3>
+          <p>The SDK profiles mouse, keyboard, scroll and load fingerprints before a challenge is even issued. Low-risk users pass instantly — most real humans never see a captcha.</p>
+        </div>
+        <div class="intro__point reveal-right">
+          <span class="intro__point-num">02</span>
+          <h3>Built to fight AI</h3>
+          <p>Rotated and warped glyphs, dynamic font streams, AI-generated spatial geometry, decoy interference — every challenge races the latest OCR and vision models.</p>
+        </div>
+        <div class="intro__point reveal-right">
+          <span class="intro__point-num">03</span>
+          <h3>Defense in depth, not single-point friction</h3>
+          <p>Behavioral analysis + Proof-of-Work + explainable risk engine + one-time tickets work as four coupled layers. Breaking any single layer gets you nowhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo" id="demo">
+    <div class="container">
+      <div class="demo__head">
+        <h2 class="demo__title reveal">A real component below — try it</h2>
+        <p class="demo__desc reveal">This section embeds the built output of <code>@corptcha/widget-sdk</code> directly. Challenges are drawn by the real renderer inside Shadow DOM. It uses built-in demo data when no backend is present; point it at a real API and it becomes the full verification flow.</p>
+      </div>
+      <div class="demo__panel reveal">
+        <div class="demo__stage" id="demoStage">
+          <div id="demoWidget" class="demo__widget"></div>
+          <div class="demo__status" id="demoStatus" aria-live="polite">Idle</div>
+        </div>
+        <div class="demo__controls">
+          <span class="demo__controls-label">Pick a challenge</span>
+          <div class="demo__tabs" id="demoTabs" role="tablist" aria-label="Challenge types">
+            <button type="button" role="tab" data-kind="slider" aria-selected="true">Slider</button>
+            <button type="button" role="tab" data-kind="puzzle">Puzzle</button>
+            <button type="button" role="tab" data-kind="rotate_puzzle">Rotate</button>
+            <button type="button" role="tab" data-kind="spatial">Spatial</button>
+            <button type="button" role="tab" data-kind="drag_confirm">Drag</button>
+            <button type="button" role="tab" data-kind="decoy">Glyphs</button>
+          </div>
+          <button class="demo__run" id="demoRun" type="button"><span>Rerun</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="challenges" id="challenges">
+    <div class="container">
+      <div class="challenges__head">
+        <h2 class="challenges__title reveal">8 challenges</h2>
+        <p class="challenges__desc reveal">All are issued dynamically by the server and rotated deterministically by risk level. Six of them can be tried for real in the demo above.</p>
+      </div>
+      <ul class="challenges__grid">
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">click</span>
+          <h3>Click glyphs</h3>
+          <p>Click the target glyphs as prompted; glyphs are rotated, warped, channel-shifted and overlaid with a grid.</p>
+          <span class="ch-item__tag">Glyph rendering</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">drag_confirm</span>
+          <h3>Drag confirm</h3>
+          <p>Drag along the given path into the target zone; the server silently validates speed, jitter and pause rhythm.</p>
+          <span class="ch-item__tag">Trajectory check</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">slider</span>
+          <h3>Slider puzzle</h3>
+          <p>Slide the missing piece to the right spot — but only after completing a SHA-256 Proof-of-Work.</p>
+          <span class="ch-item__tag">PoW</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">puzzle</span>
+          <h3>Three-piece puzzle</h3>
+          <p>Put the three fragments back in order; outlines and base image are generated server-side.</p>
+          <span class="ch-item__tag">PoW</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">rotate_puzzle</span>
+          <h3>Rotate puzzle</h3>
+          <p>Align the inner and outer rings; direction, angle and step count are all randomized server-side.</p>
+          <span class="ch-item__tag">PoW</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">decoy</span>
+          <h3>Decoy glyphs</h3>
+          <p>Pick the real glyph out of highly similar decoys, rendered live by an independent rendering service.</p>
+          <span class="ch-item__tag">Font countermeasure</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">ghost</span>
+          <h3>Ghost glyphs</h3>
+          <p>Glyphs render client-side as a dynamic font stream — screenshots and frame-by-frame OCR cannot reconstruct them.</p>
+          <span class="ch-item__tag">Needs render service</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">spatial</span>
+          <h3>Spatial geometry</h3>
+          <p>Click the matching target inside AI-generated 3D geometry; spatial understanding is a known weakness of generic vision models.</p>
+          <span class="ch-item__tag">AI generated</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="security" id="security">
+    <div class="security__sticky">
+      <div class="security__intro">
+        <h2 class="security__title reveal">Four layers deep</h2>
+        <div class="security__progress" aria-hidden="true">
+          <button class="security__dot is-active" data-target="0" type="button" aria-label="Defense 1"></button>
+          <button class="security__dot" data-target="1" type="button" aria-label="Defense 2"></button>
+          <button class="security__dot" data-target="2" type="button" aria-label="Defense 3"></button>
+          <button class="security__dot" data-target="3" type="button" aria-label="Defense 4"></button>
+        </div>
+      </div>
+      <div class="security__stages">
+        <article class="sec-item is-active" data-index="0">
+          <span class="sec-item__num">L1 / BEHAVIOR</span>
+          <h3 class="sec-item__title">Behavioral fingerprinting</h3>
+          <p class="sec-item__desc">The SDK samples mousemove / click / keydown / scroll frequency, pointer kinematics and load timing, and scores risk before a challenge is issued. Machine and human trajectories are statistically separable.</p>
+          <ul class="sec-item__feats">
+            <li>Pointer speed / jitter / pause rhythm</li>
+            <li>Keystroke cadence and click heatmaps</li>
+            <li>Page-load and first-frame timing fingerprints</li>
+          </ul>
+        </article>
+        <article class="sec-item" data-index="1">
+          <span class="sec-item__num">L2 / POW</span>
+          <h3 class="sec-item__title">Proof-of-Work</h3>
+          <p class="sec-item__desc">Slider, puzzle and spatial challenges embed a SHA-256 target computation. The client must spend real compute to obtain a valid answer, geometrically raising the cost of batch attacks.</p>
+          <ul class="sec-item__feats">
+            <li>Server-signed nonce and target values</li>
+            <li>Chunked concurrent mining on the client</li>
+            <li>Compute time feeds risk re-scoring</li>
+          </ul>
+        </article>
+        <article class="sec-item" data-index="2">
+          <span class="sec-item__num">L3 / RISK ENGINE</span>
+          <h3 class="sec-item__title">Explainable risk engine</h3>
+          <p class="sec-item__desc">A versioned scoring engine combines IP / ASN reputation, request frequency, device consistency and behavior score. Each signal is capped so no single anomaly can spike or flatten the verdict.</p>
+          <ul class="sec-item__feats">
+            <li>Per-signal weight caps</li>
+            <li>Deterministic challenge rotation by risk level</li>
+            <li>Low-risk users skip verification entirely</li>
+          </ul>
+        </article>
+        <article class="sec-item" data-index="3">
+          <span class="sec-item__num">L4 / TOKEN</span>
+          <h3 class="sec-item__title">Opaque verification ticket</h3>
+          <p class="sec-item__desc">On success a one-time verification token is issued and atomically consumed by the server in Redis. Tokens cannot be forged or replayed; your backend does a single check.</p>
+          <ul class="sec-item__feats">
+            <li>Short-lived + single consumption</li>
+            <li>Full challenge state-machine tracking</li>
+            <li>Auto flows for failure / expiry / refresh</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="integration" id="integration">
+    <div class="container">
+      <div class="integration__head">
+        <h2 class="integration__title reveal">Integration guide</h2>
+        <p class="integration__desc reveal">Install the SDK, mount a node, receive the verification token in a callback — Corptcha handles the rest.</p>
+      </div>
+
+      <div class="integration__steps">
+        <div class="step reveal">
+          <span class="step__num">01</span>
+          <h3>Install the SDK</h3>
+          <pre class="code"><code><span class="tok-c">npm</span> i <span class="tok-v">@corptcha/widget-sdk</span></code></pre>
+        </div>
+        <div class="step reveal">
+          <span class="step__num">02</span>
+          <h3>Render the widget</h3>
+          <pre class="code"><code><span class="tok-c">&lt;div</span> <span class="tok-v">id</span>=<span class="tok-s">"captcha"</span><span class="tok-c">&gt;&lt;/div&gt;</span></code></pre>
+        </div>
+        <div class="step reveal">
+          <span class="step__num">03</span>
+          <h3>Verify in a callback</h3>
+          <pre class="code"><code><span class="tok-c">onSuccess</span>(token) { <span class="tok-v">submit</span>(token) }</code></pre>
+        </div>
+      </div>
+
+      <div class="integration__code reveal">
+        <div class="code-window">
+          <div class="code-window__bar">
+            <span class="code-window__dot"></span><span class="code-window__dot"></span><span class="code-window__dot"></span>
+            <span class="code-window__name">captcha.js</span>
+            <button class="code-window__copy" id="copyCode" type="button">Copy</button>
+          </div>
+          <pre class="code code--window"><code><span class="tok-k">import</span> { render } <span class="tok-k">from</span> <span class="tok-s">'@corptcha/widget-sdk'</span>;
+
+<span class="tok-k">const</span> widget = <span class="tok-fn">render</span>(<span class="tok-fn">document</span>.<span class="tok-fn">querySelector</span>(<span class="tok-s">'#captcha'</span>), {
+  apiBaseUrl: <span class="tok-s">'https://api.example.com'</span>,
+  siteKey: <span class="tok-s">'cpt_site_xxx'</span>,
+  purpose: <span class="tok-s">'login'</span>,
+  theme: { mode: <span class="tok-s">'auto'</span> },
+  <span class="tok-fn">onSuccess</span>(token) {
+    <span class="tok-fn">submitForm</span>(token);  <span class="tok-cm">// send the token; the server verifies atomically</span>
+  },
+});</code></pre>
+        </div>
+      </div>
+
+      <div class="integration__cta reveal">
+        <h3>Ready to keep the bots out?</h3>
+        <p>Open-source core · Self-hosted · One-line Docker Compose</p>
+        <div class="integration__cta-actions">
+          <a class="btn btn--primary btn--lg" href="#top"><span>Get started</span></a>
+          <a class="btn btn--ghost btn--lg" href="#demo"><span>Watch the demo again</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="faq__head">
+        <h2 class="faq__title reveal">FAQ</h2>
+        <p class="faq__desc reveal">Everything you want to know before integrating.</p>
+      </div>
+      <div class="faq__list">
+        <details class="faq__item reveal">
+          <summary>What is Corptcha?</summary>
+          <p>A human-verification system for the AI era: behavioral pre-screening, 8 adversarial challenges and Proof-of-Work. Low-risk users pass instantly; challenges are only issued to suspicious traffic.</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>How do I integrate Corptcha?</summary>
+          <p>Sign up for a siteKey, load the SDK on the frontend to render the widget, and verify the verification token on your backend. Integration takes minutes — see the guide above.</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>Is Corptcha open source?</summary>
+          <p>The core is open source and can be self-hosted with a one-command Docker deploy; your data never leaves your network.</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>Where is verification data stored?</summary>
+          <p>When self-hosted, verification data lives only in your own infrastructure with no third-party dependencies.</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>How does it affect user experience and performance?</summary>
+          <p>Low-risk users pass instantly via behavioral pre-screening. Proof-of-Work and challenges only apply to suspicious traffic, so real visitors barely notice.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="footer__logo" href="#top">
+          <img src="../assets/logo.png" alt="Corptcha" />
+        </a>
+        <p class="footer__slogan">Human verification for the AI era</p>
+      </div>
+      <nav class="footer__links" aria-label="Footer">
+        <div class="footer__group"><h4>Product</h4><a href="#demo">Live demo</a><a href="#challenges">Challenge types</a><a href="#security">Security layers</a><a href="#integration">Integration</a></div>
+        <div class="footer__group"><h4>Resources</h4><a href="#integration">SDK docs</a><a href="#security">Risk assessment</a><a href="#top">Releases</a></div>
+        <div class="footer__group"><h4>Community</h4><a href="https://github.com" target="_blank" rel="noopener">GitHub</a><a href="#top">Discord</a><a href="#top">Newsletter</a></div>
+      </nav>
+    </div>
+    <div class="footer__bar">
+      <p class="footer__copyright">© 2026 Corptcha. All rights reserved.</p>
+      <a class="footer__lang" href="../zh/" hreflang="zh-CN" lang="zh-CN" data-lang="zh">中文</a>
+      <p class="footer__note">A captcha system built to fight AI</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../vendor/corptcha.iife.js"></script>
+<script src="../js/theme.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/glass.js"></script>
+<script src="../js/reveal.js"></script>
+<script src="../js/hero.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../js/sections.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

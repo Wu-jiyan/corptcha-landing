@@ -168,12 +168,19 @@
   /* ---------- 标语打字机：多条循环，退格重输 ---------- */
   const typeEl = document.getElementById('heroType');
   if (typeEl) {
-    const phrases = [
-      '面向 AI 时代的人机验证系统',
-      '行为轨迹预判，8 种对抗式挑战',
-      '可解释风险引擎，低风险直接放行',
-      'PoW 工作量证明，机器无路可走',
-    ];
+    const phrases = /^en/i.test(document.documentElement.lang)
+      ? [
+          'Human verification for the AI era',
+          'Behavioral pre-screening, 8 adversarial challenges',
+          'Explainable risk engine — low-risk users pass instantly',
+          'Proof-of-Work: bots run out of steam',
+        ]
+      : [
+          '面向 AI 时代的人机验证系统',
+          '行为轨迹预判，8 种对抗式挑战',
+          '可解释风险引擎，低风险直接放行',
+          'PoW 工作量证明，机器无路可走',
+        ];
     if (reduced) {
       typeEl.textContent = phrases[0];
     } else {

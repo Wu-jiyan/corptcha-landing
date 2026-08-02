@@ -10,6 +10,25 @@
   const tabButtons = Array.prototype.slice.call(document.querySelectorAll('#demoTabs [data-kind]'));
   if (!widgetHost || !statusEl) return;
 
+  const IS_EN = /^en/i.test(document.documentElement.lang);
+  const T = {
+    analyzing: IS_EN ? 'Analyzing…' : '分析中…',
+    verified: IS_EN ? 'Verified · token ' : '验证通过 · token ',
+    error: IS_EN ? 'Error · ' : '错误 · ',
+    spatial: IS_EN ? 'Click the blue sphere in the image' : '点击图中蓝色的球体',
+    decoy: IS_EN ? 'Squint and type the 5 boldest glyphs' : '眯起眼睛，输入图中更实心的 5 位字符',
+    state: {
+      idle: IS_EN ? 'Idle' : '待命',
+      analyzing: IS_EN ? 'Analyzing behavior…' : '行为分析中…',
+      ready: IS_EN ? 'Challenge ready' : '挑战已就绪',
+      submitting: IS_EN ? 'Submitting…' : '验证提交中…',
+      success: IS_EN ? 'Verified' : '验证通过',
+      error: IS_EN ? 'Verification failed' : '验证出错',
+      expired: IS_EN ? 'Token expired' : '令牌已过期',
+      destroyed: IS_EN ? 'Destroyed' : '已销毁',
+    },
+  };
+
   // 与 @corptcha/widget-sdk 测试夹具一致的 PoW 向量：
   // sha256('1234567890fixture-salt') 在 powStart 处恰好命中，一次哈希即可完成。
   const POW = {
@@ -302,7 +321,7 @@
     g.fillStyle = 'rgba(255, 255, 255, 0.82)';
     g.font = '600 20px system-ui, sans-serif';
     g.textAlign = 'center';
-    g.fillText('点击图中蓝色的球体', w / 2, 40);
+    g.fillText(T.spatial, w / 2, 40);
 
     return { interactionNonce: makeNonce(), image: toPng(c), width: w, height: h, pow: POW };
   }
@@ -347,7 +366,7 @@
       g.stroke();
     }
     return {
-      prompt: '眯起眼睛，输入图中更实心的 5 位字符',
+      prompt: T.decoy,
       image: toPng(c),
       pow: POW,
     };
@@ -420,34 +439,24 @@
       widget = null;
     }
     widgetHost.replaceChildren();
-    setStatus('分析中…');
+    setStatus(T.analyzing);
     widget = Corptcha.render(widgetHost, {
       apiBaseUrl: 'https://demo.corptcha.local',
       siteKey: 'cpt_site_demo',
       purpose: 'demo',
-      language: 'zh-CN',
+      language: IS_EN ? 'en' : 'zh-CN',
       theme: { mode: 'auto' },
       autoExecute: true,
       fetcher: demoFetcher,
       onStateChange: function (state) {
         if (!state) return;
-        const map = {
-          idle: '待命',
-          analyzing: '行为分析中…',
-          ready: '挑战已就绪',
-          submitting: '验证提交中…',
-          success: '验证通过',
-          error: '验证出错',
-          expired: '令牌已过期',
-          destroyed: '已销毁',
-        };
-        setStatus(map[state.name] || state.name);
+        setStatus(T.state[state.name] || state.name);
       },
       onSuccess: function (token) {
-        setStatus('验证通过 · token ' + String(token).slice(0, 14) + '…');
+        setStatus(T.verified + String(token).slice(0, 14) + '…');
       },
       onError: function (error) {
-        setStatus('错误 · ' + (error && error.message ? error.message : String(error)));
+        setStatus(T.error + (error && error.message ? error.message : String(error)));
       },
     });
   }

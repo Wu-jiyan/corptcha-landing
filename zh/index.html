@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Corptcha — 面向 AI 时代的人机验证系统</title>
+<meta name="description" content="Corptcha 人机验证系统：8 种对抗式挑战、行为轨迹分析、PoW 工作量证明与可解释风险引擎。本页验证组件由真实 SDK 渲染，可交互。" />
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('corptcha-theme');
+      var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = saved && saved !== 'auto' ? saved : dark ? 'dark' : 'light';
+      document.documentElement.dataset.themePref = saved || 'auto';
+    } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+  })();
+</script>
+<link rel="icon" type="image/png" href="../assets/icon.png" />
+<link rel="canonical" href="https://www.corptcha.com/zh/" />
+<link rel="alternate" hreflang="zh-CN" href="https://www.corptcha.com/zh/" />
+<link rel="alternate" hreflang="en" href="https://www.corptcha.com/en/" />
+<link rel="alternate" hreflang="x-default" href="https://www.corptcha.com/" />
+<meta name="robots" content="index,follow" />
+<meta name="theme-color" content="#f2f5f1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0a0d0c" media="(prefers-color-scheme: dark)" />
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+<link rel="manifest" href="../manifest.json" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Corptcha" />
+<meta property="og:title" content="Corptcha — 面向 AI 时代的人机验证系统" />
+<meta property="og:description" content="行为轨迹预判、8 种对抗式挑战、PoW 工作量证明与可解释风险引擎。低风险用户直接放行，机器无路可走。" />
+<meta property="og:url" content="https://www.corptcha.com/zh/" />
+<meta property="og:image" content="https://www.corptcha.com/assets/og.png" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Corptcha — 面向 AI 时代的人机验证系统" />
+<meta name="twitter:description" content="行为轨迹预判、8 种对抗式挑战、PoW 工作量证明与可解释风险引擎。低风险用户直接放行，机器无路可走。" />
+<meta name="twitter:image" content="https://www.corptcha.com/assets/og.png" />
+<link rel="preload" href="../assets/fonts/red-hat-display-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../assets/fonts/red-hat-display-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "Corptcha",
+      "alternateName": "Corptcha 人机验证系统",
+      "url": "https://www.corptcha.com/",
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Corptcha",
+      "url": "https://www.corptcha.com/zh/",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Web",
+      "description": "面向 AI 时代的人机验证系统：行为轨迹预判、8 种对抗式挑战、PoW 工作量证明与可解释风险引擎。",
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Corptcha 是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "面向 AI 时代的人机验证系统：行为轨迹预判、8 种对抗式挑战与 PoW 工作量证明。低风险用户直接放行，仅对可疑流量发起挑战。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何接入 Corptcha？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "注册获取 siteKey，前端引入 SDK 渲染验证组件，后端校验 verification token。三分钟即可完成接入，详见接入指南。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Corptcha 是否开源？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "内核开源，支持 Docker 一键私有化部署，数据不出内网。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "验证数据如何存储？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "自托管部署时验证数据仅存储在你自己的基础设施中，无第三方依赖。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "对用户体验和性能的影响？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "低风险用户经行为预判直接放行，平均无感；PoW 与挑战仅针对可疑流量触发，正常访客几乎感知不到。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="../css/base.css" />
+<link rel="stylesheet" href="../css/layout.css" />
+<link rel="stylesheet" href="../css/hero.css" />
+<link rel="stylesheet" href="../css/brand.css" />
+<link rel="stylesheet" href="../css/demo.css" />
+<link rel="stylesheet" href="../css/challenges.css" />
+<link rel="stylesheet" href="../css/security.css" />
+<link rel="stylesheet" href="../css/integration.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="liquid_glass_filter" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.028" numOctaves="2" seed="7" result="n"></feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+      <feGaussianBlur stdDeviation="3.5"></feGaussianBlur>
+    </filter>
+    <filter id="liquid_glass_chroma" x="-3%" y="-3%" width="106%" height="106%" color-interpolation-filters="sRGB">
+      <feOffset in="SourceGraphic" dx="1.2" dy="1.0" result="r"></feOffset>
+      <feOffset in="SourceGraphic" dx="-1.2" dy="-1.0" result="b"></feOffset>
+      <feColorMatrix in="r" type="matrix" result="ro" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"></feColorMatrix>
+      <feColorMatrix in="SourceGraphic" type="matrix" result="go" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"></feColorMatrix>
+      <feColorMatrix in="b" type="matrix" result="bo" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"></feColorMatrix>
+      <feBlend in="ro" in2="go" mode="screen" result="rg"></feBlend>
+      <feBlend in="rg" in2="bo" mode="screen"></feBlend>
+    </filter>
+  </defs>
+</svg>
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <button class="loader__skip" id="loaderSkip" type="button" aria-label="跳过动画">
+    <span>点击屏幕以跳过动画</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M6 5v14M15.5 12 6 5v14z"/></svg>
+  </button>
+  <canvas class="loader__glitch" id="loaderGlitch"></canvas>
+  <div class="loader__scene" id="loaderScene">
+    <div class="loader__frame"></div>
+    <div class="loader__light" aria-hidden="true">
+      <i class="loader__light-layer" data-layer="g"></i>
+      <i class="loader__light-layer" data-layer="el"></i>
+      <i class="loader__light-layer" data-layer="x"></i>
+      <i class="loader__light-layer" data-layer="elin"></i>
+      <i class="loader__light-layer" data-layer="full"></i>
+      <i class="loader__light-layer" data-layer="glow"></i>
+    </div>
+    <div class="loader__brand">
+      <img class="loader__logo" src="../assets/logo-dark.png" alt="Corptcha" />
+    </div>
+    <p class="loader__tag" id="loaderTag">
+      <span class="tw">T</span><span class="tw">H</span><span class="tw">I</span><span class="tw">S</span><span class="tw-gap" aria-hidden="true"></span><span class="tw">I</span><span class="tw">S</span><span class="tw-gap" aria-hidden="true"></span><span class="tw">C</span><span class="tw tw--accent">O</span><span class="tw">R</span><span class="tw">P</span><span class="tw">T</span><span class="tw">C</span><span class="tw">H</span><span class="tw">A</span>
+    </p>
+  </div>
+</div>
+
+<div class="bg-aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="island" id="siteNav">
+  <div class="glass" aria-hidden="true">
+    <div class="glass__outer"></div>
+    <div class="glass__chroma"></div>
+    <div class="glass__cover"></div>
+    <div class="glass__reflect"></div>
+    <div class="glass__sharp"></div>
+    <div class="glass__highlight"></div>
+  </div>
+  <div class="island__inner">
+    <a class="island__logo" href="#top" aria-label="Corptcha 首页">
+      <img class="island__logo-img" src="../assets/logo.png" alt="Corptcha" />
+      <img class="island__logo-icon" src="../assets/icon.png" alt="" />
+    </a>
+    <nav class="island__nav" aria-label="主导航">
+      <a class="island__link" href="#demo">在线演示</a>
+      <a class="island__link" href="#challenges">挑战类型</a>
+      <a class="island__link" href="#security">安全机制</a>
+      <a class="island__link" href="#integration">接入指南</a>
+    </nav>
+    <div class="island__actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换亮暗主题">
+        <svg class="theme-toggle__icon theme-toggle__icon--monitor" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12" rx="1.5"/><path d="M8 20.5h8M12 16.5v4"/></svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6"/></svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+      </button>
+      <a class="island__lang" href="../en/" hreflang="en" lang="en" data-lang="en">EN</a>
+      <a class="island__cta" href="#integration"><span>开始接入</span></a>
+      <button class="island__burger" id="burgerBtn" type="button" aria-label="打开菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="island__menu" id="mobileMenu">
+    <div class="island__menu-inner">
+      <a class="island__link" href="#demo">在线演示</a>
+      <a class="island__link" href="#challenges">挑战类型</a>
+      <a class="island__link" href="#security">安全机制</a>
+      <a class="island__link" href="#integration">接入指南</a>
+      <a class="island__menu-cta" href="#integration"><span>开始接入</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="hero__sticky">
+      <div class="hero__frame" id="heroFrame">
+        <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+        <div class="hero__content">
+          <h1 class="hero__title reveal">Corptcha：让 AI 无从下手<br />让人流畅通过</h1>
+          <p class="hero__subtitle reveal"><span class="hero__type" id="heroType">面向 AI 时代的人机验证系统</span><span class="hero__caret" aria-hidden="true">_</span></p>
+          <div class="hero__actions reveal">
+            <a class="btn btn--primary" href="#demo"><span>在线体验</span> <span aria-hidden="true">→</span></a>
+            <a class="btn btn--ghost" href="#integration"><span>接入指南</span></a>
+          </div>
+          <dl class="hero__stats reveal">
+            <div class="hero__stat"><dt>8</dt><dd>种挑战类型</dd></div>
+            <div class="hero__stat"><dt>4</dt><dd>层纵深防御</dd></div>
+            <div class="hero__stat"><dt>1</dt><dd>次性验证令牌</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="brand" id="brand">
+    <div class="brand__sticky">
+      <div class="brand__barrage" aria-hidden="true">
+        <div class="brand__barrage-line brand__barrage-line--1"><span>HUMAN VS MACHINE</span><span>人机对抗</span><span>HUMAN VS MACHINE</span><span>人机对抗</span><span>HUMAN VS MACHINE</span><span>人机对抗</span></div>
+        <div class="brand__barrage-line brand__barrage-line--2"><span>BEHAVIOR · POW · RISK ENGINE</span><span>BEHAVIOR · POW · RISK ENGINE</span><span>BEHAVIOR · POW · RISK ENGINE</span></div>
+        <div class="brand__barrage-line brand__barrage-line--3"><span>NO BOTS ALLOWED</span><span>机器禁止入内</span><span>NO BOTS ALLOWED</span><span>机器禁止入内</span><span>NO BOTS ALLOWED</span><span>机器禁止入内</span></div>
+      </div>
+      <div class="brand__center">
+        <img class="brand__logo-img" src="../assets/logo.png" alt="Corptcha" />
+        <div class="brand__viewfinder" aria-hidden="true">
+          <i class="vf vf--tl"></i><i class="vf vf--tr"></i><i class="vf vf--bl"></i><i class="vf vf--br"></i>
+        </div>
+      </div>
+      <div class="brand__mask" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="intro" id="intro">
+    <div class="container intro__grid">
+      <div class="intro__lead reveal-left">
+        <h2 class="intro__title">验证码的终点，<br />是让机器替人思考。</h2>
+      </div>
+      <div class="intro__points">
+        <div class="intro__point reveal-right">
+          <span class="intro__point-num">01</span>
+          <h3>行为优先，验证兜底</h3>
+          <p>SDK 在请求签发前采集鼠标、键盘、滚动与加载指纹做风险预判，低风险直接放行——绝大多数真实用户根本不会遇到验证码。</p>
+        </div>
+        <div class="intro__point reveal-right">
+          <span class="intro__point-num">02</span>
+          <h3>专为对抗 AI 设计</h3>
+          <p>字符旋转扭曲、动态字体流、AI 生成空间几何、诱饵干扰——每一类挑战都在和最新的 OCR 与视觉模型赛跑。</p>
+        </div>
+        <div class="intro__point reveal-right">
+          <span class="intro__point-num">03</span>
+          <h3>纵深防御，而非单点对抗</h3>
+          <p>行为分析 + 工作量证明 + 可解释风险引擎 + 一次性票据四层联动，破解任意一层都无法通关。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo" id="demo">
+    <div class="container">
+      <div class="demo__head">
+        <h2 class="demo__title reveal">下方是真实组件，可以交互</h2>
+        <p class="demo__desc reveal">本区域直接嵌入 <code>@corptcha/widget-sdk</code> 的构建产物，挑战由真实渲染器绘制在 Shadow DOM 中。无后端时使用内置演示数据，接入真实 API 后即为完整验证流程。</p>
+      </div>
+      <div class="demo__panel reveal">
+        <div class="demo__stage" id="demoStage">
+          <div id="demoWidget" class="demo__widget"></div>
+          <div class="demo__status" id="demoStatus" aria-live="polite">待命</div>
+        </div>
+        <div class="demo__controls">
+          <span class="demo__controls-label">选择挑战</span>
+          <div class="demo__tabs" id="demoTabs" role="tablist" aria-label="挑战类型">
+            <button type="button" role="tab" data-kind="slider" aria-selected="true">滑块</button>
+            <button type="button" role="tab" data-kind="puzzle">拼图</button>
+            <button type="button" role="tab" data-kind="rotate_puzzle">旋转</button>
+            <button type="button" role="tab" data-kind="spatial">空间</button>
+            <button type="button" role="tab" data-kind="drag_confirm">拖拽</button>
+            <button type="button" role="tab" data-kind="decoy">字符</button>
+          </div>
+          <button class="demo__run" id="demoRun" type="button"><span>重新执行</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="challenges" id="challenges">
+    <div class="container">
+      <div class="challenges__head">
+        <h2 class="challenges__title reveal">8 种挑战</h2>
+        <p class="challenges__desc reveal">全部由服务端动态签发，按风险等级确定性轮换。其中 6 种可在上方演示台真实体验。</p>
+      </div>
+      <ul class="challenges__grid">
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">click</span>
+          <h3>点选字符</h3>
+          <p>按提示点击目标字符，字符经旋转、拉伸、多通道错位与网格干扰渲染。</p>
+          <span class="ch-item__tag">字符渲染</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">drag_confirm</span>
+          <h3>拖拽确认</h3>
+          <p>沿指定轨迹拖入目标区，服务端静默校验速度、抖动与停顿节奏。</p>
+          <span class="ch-item__tag">轨迹校验</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">slider</span>
+          <h3>滑块拼图</h3>
+          <p>将缺口拼图推到正确位置，回答前必须先完成 SHA-256 工作量证明。</p>
+          <span class="ch-item__tag">PoW</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">puzzle</span>
+          <h3>三块拼图</h3>
+          <p>将三块碎片按序归位，碎片轮廓与底图由服务端生成。</p>
+          <span class="ch-item__tag">PoW</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">rotate_puzzle</span>
+          <h3>旋转拼图</h3>
+          <p>旋转内外环使缺口对齐，方向、角度与次数全部服务端随机化。</p>
+          <span class="ch-item__tag">PoW</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">decoy</span>
+          <h3>诱饵字体</h3>
+          <p>从高度相似的干扰字体中识别真字符，诱饵由独立渲染服务实时生成。</p>
+          <span class="ch-item__tag">字体对抗</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">ghost</span>
+          <h3>幽灵字体</h3>
+          <p>字符以动态字体流在客户端实时渲染，截图与逐帧识别均无法还原。</p>
+          <span class="ch-item__tag">需渲染服务</span>
+        </li>
+        <li class="ch-item reveal">
+          <span class="ch-item__kind">spatial</span>
+          <h3>空间几何</h3>
+          <p>点击 AI 生成的立体几何中符合条件的目标，三维空间理解是通用视觉模型的短板。</p>
+          <span class="ch-item__tag">AI 生成</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="security" id="security">
+    <div class="security__sticky">
+      <div class="security__intro">
+        <h2 class="security__title reveal">四层纵深</h2>
+        <div class="security__progress" aria-hidden="true">
+          <button class="security__dot is-active" data-target="0" type="button" aria-label="防御 1"></button>
+          <button class="security__dot" data-target="1" type="button" aria-label="防御 2"></button>
+          <button class="security__dot" data-target="2" type="button" aria-label="防御 3"></button>
+          <button class="security__dot" data-target="3" type="button" aria-label="防御 4"></button>
+        </div>
+      </div>
+      <div class="security__stages">
+        <article class="sec-item is-active" data-index="0">
+          <span class="sec-item__num">L1 / BEHAVIOR</span>
+          <h3 class="sec-item__title">行为轨迹分析</h3>
+          <p class="sec-item__desc">SDK 采集 mousemove / click / keydown / scroll 频率、指针运动学与加载耗时，在挑战签发前完成风险预判。机器行为与人类轨迹在统计特征上天然可分。</p>
+          <ul class="sec-item__feats">
+            <li>指针速度 / 抖动 / 停顿节奏</li>
+            <li>键盘输入节律与点击热区</li>
+            <li>页面加载与首帧耗时指纹</li>
+          </ul>
+        </article>
+        <article class="sec-item" data-index="1">
+          <span class="sec-item__num">L2 / POW</span>
+          <h3 class="sec-item__title">工作量证明</h3>
+          <p class="sec-item__desc">滑块、拼图与空间挑战内置 SHA-256 目标计算，客户端必须先消耗真实算力才能获得合法回答。批量攻击的成本被几何级抬高。</p>
+          <ul class="sec-item__feats">
+            <li>服务端签名 nonce 与目标值</li>
+            <li>客户端分片并发挖矿</li>
+            <li>算力耗时参与风险再评估</li>
+          </ul>
+        </article>
+        <article class="sec-item" data-index="2">
+          <span class="sec-item__num">L3 / RISK ENGINE</span>
+          <h3 class="sec-item__title">可解释风险引擎</h3>
+          <p class="sec-item__desc">版本化评分引擎综合 IP / ASN 信誉、请求频率、设备一致性与行为得分，限制单一信号权重，任何单项异常都无法单独拉爆或压平风险。</p>
+          <ul class="sec-item__feats">
+            <li>单信号权重上限约束</li>
+            <li>风险等级确定性轮换挑战</li>
+            <li>低风险免验证直接放行</li>
+          </ul>
+        </article>
+        <article class="sec-item" data-index="3">
+          <span class="sec-item__num">L4 / TOKEN</span>
+          <h3 class="sec-item__title">不透明验证票据</h3>
+          <p class="sec-item__desc">通过后签发一次性验证令牌，由服务端在 Redis 中原子消费。令牌不可伪造、不可重放，业务侧只需一次校验。</p>
+          <ul class="sec-item__feats">
+            <li>短时有效 + 单次消费</li>
+            <li>挑战状态机全程追踪</li>
+            <li>失败 / 过期 / 刷新自动流转</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="integration" id="integration">
+    <div class="container">
+      <div class="integration__head">
+        <h2 class="integration__title reveal">接入指南</h2>
+        <p class="integration__desc reveal">引入 SDK，挂载一个节点，在回调里拿到验证令牌——剩下的交给 Corptcha。</p>
+      </div>
+
+      <div class="integration__steps">
+        <div class="step reveal">
+          <span class="step__num">01</span>
+          <h3>安装 SDK</h3>
+          <pre class="code"><code><span class="tok-c">npm</span> i <span class="tok-v">@corptcha/widget-sdk</span></code></pre>
+        </div>
+        <div class="step reveal">
+          <span class="step__num">02</span>
+          <h3>渲染组件</h3>
+          <pre class="code"><code><span class="tok-c">&lt;div</span> <span class="tok-v">id</span>=<span class="tok-s">"captcha"</span><span class="tok-c">&gt;&lt;/div&gt;</span></code></pre>
+        </div>
+        <div class="step reveal">
+          <span class="step__num">03</span>
+          <h3>回调放行</h3>
+          <pre class="code"><code><span class="tok-c">onSuccess</span>(token) { <span class="tok-v">submit</span>(token) }</code></pre>
+        </div>
+      </div>
+
+      <div class="integration__code reveal">
+        <div class="code-window">
+          <div class="code-window__bar">
+            <span class="code-window__dot"></span><span class="code-window__dot"></span><span class="code-window__dot"></span>
+            <span class="code-window__name">captcha.js</span>
+            <button class="code-window__copy" id="copyCode" type="button">复制</button>
+          </div>
+          <pre class="code code--window"><code><span class="tok-k">import</span> { render } <span class="tok-k">from</span> <span class="tok-s">'@corptcha/widget-sdk'</span>;
+
+<span class="tok-k">const</span> widget = <span class="tok-fn">render</span>(<span class="tok-fn">document</span>.<span class="tok-fn">querySelector</span>(<span class="tok-s">'#captcha'</span>), {
+  apiBaseUrl: <span class="tok-s">'https://api.example.com'</span>,
+  siteKey: <span class="tok-s">'cpt_site_xxx'</span>,
+  purpose: <span class="tok-s">'login'</span>,
+  theme: { mode: <span class="tok-s">'auto'</span> },
+  <span class="tok-fn">onSuccess</span>(token) {
+    <span class="tok-fn">submitForm</span>(token);  <span class="tok-cm">// 携带令牌提交，服务端原子校验</span>
+  },
+});</code></pre>
+        </div>
+      </div>
+
+      <div class="integration__cta reveal">
+        <h3>准备好把机器挡在门外了吗？</h3>
+        <p>开源内核 · 私有化部署 · Docker Compose 一键拉起</p>
+        <div class="integration__cta-actions">
+          <a class="btn btn--primary btn--lg" href="#top"><span>立即开始</span></a>
+          <a class="btn btn--ghost btn--lg" href="#demo"><span>再看一遍演示</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="faq__head">
+        <h2 class="faq__title reveal">常见问题</h2>
+        <p class="faq__desc reveal">接入前想知道的，都在这里。</p>
+      </div>
+      <div class="faq__list">
+        <details class="faq__item reveal">
+          <summary>Corptcha 是什么？</summary>
+          <p>面向 AI 时代的人机验证系统：行为轨迹预判、8 种对抗式挑战与 PoW 工作量证明。低风险用户直接放行，仅对可疑流量发起挑战。</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>如何接入 Corptcha？</summary>
+          <p>注册获取 siteKey，前端引入 SDK 渲染验证组件，后端校验 verification token。三分钟即可完成接入，详见接入指南。</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>Corptcha 是否开源？</summary>
+          <p>内核开源，支持 Docker 一键私有化部署，数据不出内网。</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>验证数据如何存储？</summary>
+          <p>自托管部署时验证数据仅存储在你自己的基础设施中，无第三方依赖。</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>对用户体验和性能的影响？</summary>
+          <p>低风险用户经行为预判直接放行，平均无感；PoW 与挑战仅针对可疑流量触发，正常访客几乎感知不到。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="footer__logo" href="#top">
+          <img src="../assets/logo.png" alt="Corptcha" />
+        </a>
+        <p class="footer__slogan">面向 AI 时代的人机验证系统</p>
+      </div>
+      <nav class="footer__links" aria-label="页脚导航">
+        <div class="footer__group"><h4>产品</h4><a href="#demo">在线演示</a><a href="#challenges">挑战类型</a><a href="#security">安全机制</a><a href="#integration">接入指南</a></div>
+        <div class="footer__group"><h4>协议</h4><a href="#integration">SDK 文档</a><a href="#security">风险评估</a><a href="#top">版本发布</a></div>
+        <div class="footer__group"><h4>社区</h4><a href="https://github.com" target="_blank" rel="noopener">GitHub</a><a href="#top">Discord</a><a href="#top">邮件订阅</a></div>
+      </nav>
+    </div>
+    <div class="footer__bar">
+      <p class="footer__copyright">© 2026 Corptcha. All rights reserved.</p>
+      <a class="footer__lang" href="../en/" hreflang="en" lang="en" data-lang="en">English</a>
+      <p class="footer__note">对抗 AI 的验证码系统</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../vendor/corptcha.iife.js"></script>
+<script src="../js/theme.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/glass.js"></script>
+<script src="../js/reveal.js"></script>
+<script src="../js/hero.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../js/sections.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

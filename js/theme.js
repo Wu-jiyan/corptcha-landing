@@ -7,6 +7,10 @@
 
   function apply(theme) {
     root.dataset.theme = theme;
+    const metas = document.querySelectorAll('meta[name="theme-color"]');
+    for (let i = 0; i < metas.length; i++) {
+      metas[i].setAttribute('content', theme === 'dark' ? '#0a0d0c' : '#f2f5f1');
+    }
   }
 
   function cycle() {

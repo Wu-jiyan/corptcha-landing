@@ -213,4 +213,12 @@
     document.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   })();
+
+  /* ---------- 语言切换：记住手动选择 ---------- */
+  const langLinks = document.querySelectorAll('[data-lang]');
+  for (let i = 0; i < langLinks.length; i++) {
+    langLinks[i].addEventListener('click', function () {
+      try { localStorage.setItem('corptcha-lang', this.getAttribute('data-lang')); } catch (e) { /* ignore */ }
+    });
+  }
 })();
