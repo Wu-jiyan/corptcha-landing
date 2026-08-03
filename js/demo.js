@@ -8,13 +8,15 @@
   const statusEl = document.getElementById('demoStatus');
   const runBtn = document.getElementById('demoRun');
   const tabButtons = Array.prototype.slice.call(document.querySelectorAll('#demoTabs [data-kind]'));
-  if (!widgetHost || !statusEl) return;
+  if (!widgetHost || !statusEl || !runBtn) return;
 
   const IS_EN = /^en/i.test(document.documentElement.lang);
   const T = {
     analyzing: IS_EN ? 'Analyzing…' : '分析中…',
     verified: IS_EN ? 'Verified · token ' : '验证通过 · token ',
     error: IS_EN ? 'Error · ' : '错误 · ',
+    picked: IS_EN ? 'Selected: ' : '已选择：',
+    startHint: IS_EN ? ' · press Start' : '，点击开始验证',
     state: {
       idle: IS_EN ? 'Idle' : '待命',
       analyzing: IS_EN ? 'Analyzing behavior…' : '行为分析中…',
@@ -31,13 +33,11 @@
   // 演示模式站点：cpt_674aa5ef947b（控制台已开启"演示模式"，签发时按 challengeKind 固定返回对应挑战）
   const DEMO_SITE_KEY = 'cpt_674aa5ef947b';
 
-  let currentKind = 'slider';
+  let widget = null;
 
   function setStatus(text) {
     statusEl.textContent = text;
   }
-
-  let widget = null;
 
   function mount() {
     if (widget) {
@@ -46,11 +46,13 @@
     }
     widgetHost.replaceChildren();
     setStatus(T.analyzing);
+    const active = document.querySelector('#demoTabs [data-kind][aria-selected="true"]');
+    const kind = active ? active.dataset.kind : 'slider';
     widget = Corptcha.render(widgetHost, {
       apiBaseUrl: API_BASE_URL,
       siteKey: DEMO_SITE_KEY,
       purpose: 'demo',
-      challengeKind: currentKind,
+      challengeKind: kind,
       language: IS_EN ? 'en' : 'zh-CN',
       theme: { mode: 'auto' },
       autoExecute: true,
@@ -69,17 +71,12 @@
 
   tabButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      currentKind = btn.dataset.kind || 'slider';
       tabButtons.forEach(function (b) {
         b.setAttribute('aria-selected', String(b === btn));
       });
-      mount();
+      setStatus(T.picked + btn.textContent + T.startHint);
     });
   });
 
-  if (runBtn) {
-    runBtn.addEventListener('click', mount);
-  }
-
-  mount();
+  runBtn.addEventListener('click', mount);
 })();

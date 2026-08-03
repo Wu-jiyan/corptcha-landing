@@ -278,7 +278,7 @@
     <div class="container">
       <div class="demo__head">
         <h2 class="demo__title reveal">A real component below — try it</h2>
-        <p class="demo__desc reveal">This section embeds the built output of <code>@corptcha/widget-sdk</code> and talks to the real verification service — behavior analysis, challenge issuance, verification and tokens are all handled server-side. Switch tabs to experience different challenge types.</p>
+        <p class="demo__desc reveal">This section embeds the built output of <code>@corptcha/widget-sdk</code> and talks to the real verification service — behavior analysis, challenge issuance, verification and tokens are all handled server-side. Pick a tab and press Start to experience each challenge type.</p>
       </div>
       <div class="demo__panel reveal">
         <div class="demo__stage" id="demoStage">
@@ -288,14 +288,16 @@
         <div class="demo__controls">
           <span class="demo__controls-label">Pick a challenge</span>
           <div class="demo__tabs" id="demoTabs" role="tablist" aria-label="Challenge types">
+            <button type="button" role="tab" data-kind="click">Click</button>
+            <button type="button" role="tab" data-kind="drag_confirm">Drag</button>
             <button type="button" role="tab" data-kind="slider" aria-selected="true">Slider</button>
             <button type="button" role="tab" data-kind="puzzle">Puzzle</button>
             <button type="button" role="tab" data-kind="rotate_puzzle">Rotate</button>
             <button type="button" role="tab" data-kind="spatial">Spatial</button>
-            <button type="button" role="tab" data-kind="drag_confirm">Drag</button>
             <button type="button" role="tab" data-kind="decoy">Glyphs</button>
+            <button type="button" role="tab" data-kind="ghost">Ghost</button>
           </div>
-          <button class="demo__run" id="demoRun" type="button"><span>Rerun</span></button>
+          <button class="demo__run" id="demoRun" type="button"><span>Start</span></button>
         </div>
       </div>
     </div>
@@ -305,7 +307,7 @@
     <div class="container">
       <div class="challenges__head">
         <h2 class="challenges__title reveal">8 challenges</h2>
-        <p class="challenges__desc reveal">All are issued dynamically by the server and rotated deterministically by risk level. Six of them can be tried for real in the demo above.</p>
+        <p class="challenges__desc reveal">All are issued dynamically by the server and rotated deterministically by risk level. All 8 types can be triggered manually in the demo above.</p>
       </div>
       <ul class="challenges__grid">
         <li class="ch-item reveal">
@@ -534,7 +536,7 @@
 <script src="//res.25y.cn/corptcha/landing/js/glass.js?v=2"></script>
 <script src="//res.25y.cn/corptcha/landing/js/reveal.js?v=2"></script>
 <script src="//res.25y.cn/corptcha/landing/js/hero.js?v=2"></script>
-<script src="//res.25y.cn/corptcha/landing/js/demo.js?v=3"></script>
+<script src="//res.25y.cn/corptcha/landing/js/demo.js?v=4"></script>
 <script src="//res.25y.cn/corptcha/landing/js/sections.js?v=2"></script>
 <script src="//res.25y.cn/corptcha/landing/js/main.js?v=2"></script>
 </body>

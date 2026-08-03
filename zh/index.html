@@ -278,7 +278,7 @@
     <div class="container">
       <div class="demo__head">
         <h2 class="demo__title reveal">下方是真实组件，可以交互</h2>
-        <p class="demo__desc reveal">本区域直接嵌入 <code>@corptcha/widget-sdk</code> 的构建产物，连接真实验证服务：行为分析、挑战签发、验证与票据全部由服务端完成。切换标签即可体验不同类型的挑战。</p>
+        <p class="demo__desc reveal">本区域直接嵌入 <code>@corptcha/widget-sdk</code> 的构建产物，连接真实验证服务：行为分析、挑战签发、验证与票据全部由服务端完成。切换标签并点击开始，即可体验不同类型的挑战。</p>
       </div>
       <div class="demo__panel reveal">
         <div class="demo__stage" id="demoStage">
@@ -288,14 +288,16 @@
         <div class="demo__controls">
           <span class="demo__controls-label">选择挑战</span>
           <div class="demo__tabs" id="demoTabs" role="tablist" aria-label="挑战类型">
+            <button type="button" role="tab" data-kind="click">点选</button>
+            <button type="button" role="tab" data-kind="drag_confirm">拖拽</button>
             <button type="button" role="tab" data-kind="slider" aria-selected="true">滑块</button>
             <button type="button" role="tab" data-kind="puzzle">拼图</button>
             <button type="button" role="tab" data-kind="rotate_puzzle">旋转</button>
             <button type="button" role="tab" data-kind="spatial">空间</button>
-            <button type="button" role="tab" data-kind="drag_confirm">拖拽</button>
             <button type="button" role="tab" data-kind="decoy">字符</button>
+            <button type="button" role="tab" data-kind="ghost">动态</button>
           </div>
-          <button class="demo__run" id="demoRun" type="button"><span>重新执行</span></button>
+          <button class="demo__run" id="demoRun" type="button"><span>开始验证</span></button>
         </div>
       </div>
     </div>
@@ -305,7 +307,7 @@
     <div class="container">
       <div class="challenges__head">
         <h2 class="challenges__title reveal">8 种挑战</h2>
-        <p class="challenges__desc reveal">全部由服务端动态签发，按风险等级确定性轮换。其中 6 种可在上方演示台真实体验。</p>
+        <p class="challenges__desc reveal">全部由服务端动态签发，按风险等级确定性轮换。全部 8 种均可在上方演示台手动触发体验。</p>
       </div>
       <ul class="challenges__grid">
         <li class="ch-item reveal">
@@ -534,7 +536,7 @@
 <script src="//res.25y.cn/corptcha/landing/js/glass.js?v=2"></script>
 <script src="//res.25y.cn/corptcha/landing/js/reveal.js?v=2"></script>
 <script src="//res.25y.cn/corptcha/landing/js/hero.js?v=2"></script>
-<script src="//res.25y.cn/corptcha/landing/js/demo.js?v=3"></script>
+<script src="//res.25y.cn/corptcha/landing/js/demo.js?v=4"></script>
 <script src="//res.25y.cn/corptcha/landing/js/sections.js?v=2"></script>
 <script src="//res.25y.cn/corptcha/landing/js/main.js?v=2"></script>
 </body>
