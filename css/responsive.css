@@ -32,10 +32,6 @@
   .demo__stage {
     min-height: 0;
   }
-
-  .integration__steps {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 768px) {
