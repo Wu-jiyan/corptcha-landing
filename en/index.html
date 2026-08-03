@@ -113,8 +113,8 @@
 <link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/demo.css?v=3" />
 <link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/challenges.css?v=2" />
 <link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/security.css?v=2" />
-<link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/integration.css?v=2" />
-<link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/responsive.css?v=2" />
+<link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/integration.css?v=3" />
+<link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/responsive.css?v=3" />
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <filter id="liquid_glass_filter" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
@@ -422,24 +422,29 @@
     <div class="container">
       <div class="integration__head">
         <h2 class="integration__title reveal">Integration guide</h2>
-        <p class="integration__desc reveal">Install the SDK, mount a node, receive the verification token in a callback — Corptcha handles the rest.</p>
+        <p class="integration__desc reveal">Four steps: create a site, include the SDK, render the captcha, verify the token server-side. See the <a href="https://docs.corptcha.com/guide/quickstart.html" target="_blank" rel="noopener">quickstart docs</a> for details.</p>
       </div>
 
       <div class="integration__steps">
         <div class="step reveal">
           <span class="step__num">01</span>
-          <h3>Install the SDK</h3>
-          <pre class="code"><code><span class="tok-c">npm</span> i <span class="tok-v">@corptcha/widget-sdk</span></code></pre>
+          <h3>Create a site</h3>
+          <p class="step__desc">Create a site in the console to get a Site ID (e.g. cpt_xxxxxxxxxxxx). Site IDs are public — never expose your Secret.</p>
         </div>
         <div class="step reveal">
           <span class="step__num">02</span>
-          <h3>Render the widget</h3>
-          <pre class="code"><code><span class="tok-c">&lt;div</span> <span class="tok-v">id</span>=<span class="tok-s">"captcha"</span><span class="tok-c">&gt;&lt;/div&gt;</span></code></pre>
+          <h3>Include the SDK</h3>
+          <pre class="code"><code><span class="tok-c">&lt;script</span> <span class="tok-v">src</span>=<span class="tok-s">"https://res.25y.cn/corptcha/corptcha.iife.js"</span><span class="tok-c">&gt;&lt;/script&gt;</span></code></pre>
         </div>
         <div class="step reveal">
           <span class="step__num">03</span>
-          <h3>Verify in a callback</h3>
-          <pre class="code"><code><span class="tok-c">onSuccess</span>(token) { <span class="tok-v">submit</span>(token) }</code></pre>
+          <h3>Render the captcha</h3>
+          <pre class="code"><code><span class="tok-c">Corptcha</span>.<span class="tok-fn">render</span>(<span class="tok-s">'#corptcha-widget'</span>, opts)</code></pre>
+        </div>
+        <div class="step reveal">
+          <span class="step__num">04</span>
+          <h3>Verify the token</h3>
+          <p class="step__desc">Send the one-time token with your request; the backend confirms it with the verification service before allowing access — never trust booleans.</p>
         </div>
       </div>
 
@@ -447,18 +452,20 @@
         <div class="code-window">
           <div class="code-window__bar">
             <span class="code-window__dot"></span><span class="code-window__dot"></span><span class="code-window__dot"></span>
-            <span class="code-window__name">captcha.js</span>
+            <span class="code-window__name">index.html + captcha.js</span>
             <button class="code-window__copy" id="copyCode" type="button">Copy</button>
           </div>
-          <pre class="code code--window"><code><span class="tok-k">import</span> { render } <span class="tok-k">from</span> <span class="tok-s">'@corptcha/widget-sdk'</span>;
+          <pre class="code code--window"><code><span class="tok-c">&lt;script</span> <span class="tok-v">src</span>=<span class="tok-s">"https://res.25y.cn/corptcha/corptcha.iife.js"</span><span class="tok-c">&gt;&lt;/script&gt;</span>
 
-<span class="tok-k">const</span> widget = <span class="tok-fn">render</span>(<span class="tok-fn">document</span>.<span class="tok-fn">querySelector</span>(<span class="tok-s">'#captcha'</span>), {
+<span class="tok-c">&lt;div</span> <span class="tok-v">id</span>=<span class="tok-s">"corptcha-widget"</span><span class="tok-c">&gt;&lt;/div&gt;</span>
+
+<span class="tok-k">const</span> widget = <span class="tok-fn">Corptcha.render</span>(<span class="tok-fn">document</span>.<span class="tok-fn">querySelector</span>(<span class="tok-s">'#corptcha-widget'</span>), {
   apiBaseUrl: <span class="tok-s">'https://cpt-api.25y.cn'</span>,
-  siteKey: <span class="tok-s">'cpt_site_xxx'</span>,
+  siteKey: <span class="tok-s">'your-site-id'</span>,  <span class="tok-cm">// e.g. cpt_xxxxxxxxxxxx</span>
   purpose: <span class="tok-s">'login'</span>,
   theme: { mode: <span class="tok-s">'auto'</span> },
   <span class="tok-fn">onSuccess</span>(token) {
-    <span class="tok-fn">submitForm</span>(token);  <span class="tok-cm">// send the token; the server verifies atomically</span>
+    <span class="tok-fn">submitForm</span>(token);  <span class="tok-cm">// put the token into the form and submit</span>
   },
 });</code></pre>
         </div>
@@ -466,7 +473,7 @@
 
       <div class="integration__cta reveal">
         <h3>Ready to keep the bots out?</h3>
-        <p>Open-source core · Self-hosted · One-line Docker Compose</p>
+        <p>Free SDK · Integrated in minutes · Full steps in the <a class="cta-link" href="https://docs.corptcha.com/guide/quickstart.html" target="_blank" rel="noopener">quickstart docs</a></p>
         <div class="integration__cta-actions">
           <a class="btn btn--primary btn--lg" href="#top"><span>Get started</span></a>
           <a class="btn btn--ghost btn--lg" href="#demo"><span>Watch the demo again</span></a>

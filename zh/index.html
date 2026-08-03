@@ -113,8 +113,8 @@
 <link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/demo.css?v=3" />
 <link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/challenges.css?v=2" />
 <link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/security.css?v=2" />
-<link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/integration.css?v=2" />
-<link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/responsive.css?v=2" />
+<link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/integration.css?v=3" />
+<link rel="stylesheet" href="//res.25y.cn/corptcha/landing/css/responsive.css?v=3" />
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <filter id="liquid_glass_filter" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
@@ -422,24 +422,29 @@
     <div class="container">
       <div class="integration__head">
         <h2 class="integration__title reveal">接入指南</h2>
-        <p class="integration__desc reveal">引入 SDK，挂载一个节点，在回调里拿到验证令牌——剩下的交给 Corptcha。</p>
+        <p class="integration__desc reveal">四步接入：创建站点、引入 SDK、渲染验证码、后端校验 token。详细说明见<a href="https://docs.corptcha.com/guide/quickstart.html" target="_blank" rel="noopener">快速接入文档</a>。</p>
       </div>
 
       <div class="integration__steps">
         <div class="step reveal">
           <span class="step__num">01</span>
-          <h3>安装 SDK</h3>
-          <pre class="code"><code><span class="tok-c">npm</span> i <span class="tok-v">@corptcha/widget-sdk</span></code></pre>
+          <h3>创建站点</h3>
+          <p class="step__desc">在控制台「站点管理」创建站点，获取 Site ID（形如 cpt_xxxxxxxxxxxx）。Site ID 可公开，请勿泄露 Secret。</p>
         </div>
         <div class="step reveal">
           <span class="step__num">02</span>
-          <h3>渲染组件</h3>
-          <pre class="code"><code><span class="tok-c">&lt;div</span> <span class="tok-v">id</span>=<span class="tok-s">"captcha"</span><span class="tok-c">&gt;&lt;/div&gt;</span></code></pre>
+          <h3>引入 SDK</h3>
+          <pre class="code"><code><span class="tok-c">&lt;script</span> <span class="tok-v">src</span>=<span class="tok-s">"https://res.25y.cn/corptcha/corptcha.iife.js"</span><span class="tok-c">&gt;&lt;/script&gt;</span></code></pre>
         </div>
         <div class="step reveal">
           <span class="step__num">03</span>
-          <h3>回调放行</h3>
-          <pre class="code"><code><span class="tok-c">onSuccess</span>(token) { <span class="tok-v">submit</span>(token) }</code></pre>
+          <h3>渲染验证码</h3>
+          <pre class="code"><code><span class="tok-c">Corptcha</span>.<span class="tok-fn">render</span>(<span class="tok-s">'#corptcha-widget'</span>, opts)</code></pre>
+        </div>
+        <div class="step reveal">
+          <span class="step__num">04</span>
+          <h3>后端校验 token</h3>
+          <p class="step__desc">前端拿到的一次性 token 随请求提交，后端调用验证服务核验通过后再放行，不信任任何布尔值。</p>
         </div>
       </div>
 
@@ -447,18 +452,20 @@
         <div class="code-window">
           <div class="code-window__bar">
             <span class="code-window__dot"></span><span class="code-window__dot"></span><span class="code-window__dot"></span>
-            <span class="code-window__name">captcha.js</span>
+            <span class="code-window__name">index.html + captcha.js</span>
             <button class="code-window__copy" id="copyCode" type="button">复制</button>
           </div>
-          <pre class="code code--window"><code><span class="tok-k">import</span> { render } <span class="tok-k">from</span> <span class="tok-s">'@corptcha/widget-sdk'</span>;
+          <pre class="code code--window"><code><span class="tok-c">&lt;script</span> <span class="tok-v">src</span>=<span class="tok-s">"https://res.25y.cn/corptcha/corptcha.iife.js"</span><span class="tok-c">&gt;&lt;/script&gt;</span>
 
-<span class="tok-k">const</span> widget = <span class="tok-fn">render</span>(<span class="tok-fn">document</span>.<span class="tok-fn">querySelector</span>(<span class="tok-s">'#captcha'</span>), {
+<span class="tok-c">&lt;div</span> <span class="tok-v">id</span>=<span class="tok-s">"corptcha-widget"</span><span class="tok-c">&gt;&lt;/div&gt;</span>
+
+<span class="tok-k">const</span> widget = <span class="tok-fn">Corptcha.render</span>(<span class="tok-fn">document</span>.<span class="tok-fn">querySelector</span>(<span class="tok-s">'#corptcha-widget'</span>), {
   apiBaseUrl: <span class="tok-s">'https://cpt-api.25y.cn'</span>,
-  siteKey: <span class="tok-s">'cpt_site_xxx'</span>,
+  siteKey: <span class="tok-s">'你的 Site ID'</span>,  <span class="tok-cm">// 形如 cpt_xxxxxxxxxxxx</span>
   purpose: <span class="tok-s">'login'</span>,
   theme: { mode: <span class="tok-s">'auto'</span> },
   <span class="tok-fn">onSuccess</span>(token) {
-    <span class="tok-fn">submitForm</span>(token);  <span class="tok-cm">// 携带令牌提交，服务端原子校验</span>
+    <span class="tok-fn">submitForm</span>(token);  <span class="tok-cm">// 把 token 写入表单，随请求提交</span>
   },
 });</code></pre>
         </div>
@@ -466,7 +473,7 @@
 
       <div class="integration__cta reveal">
         <h3>准备好把机器挡在门外了吗？</h3>
-        <p>开源内核 · 私有化部署 · Docker Compose 一键拉起</p>
+        <p>SDK 免费接入 · 三分钟完成 · 详细步骤见<a class="cta-link" href="https://docs.corptcha.com/guide/quickstart.html" target="_blank" rel="noopener">快速接入文档</a></p>
         <div class="integration__cta-actions">
           <a class="btn btn--primary btn--lg" href="#top"><span>立即开始</span></a>
           <a class="btn btn--ghost btn--lg" href="#demo"><span>再看一遍演示</span></a>
