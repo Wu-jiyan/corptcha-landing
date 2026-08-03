@@ -53,7 +53,9 @@
 
 .demo__widget {
   position: relative;
-  z-index: 1;
+  /* 不能设 z-index：会为 shadow host 创建 stacking context，
+     把 SDK 弹窗（fixed + z-index 2147483647）限制在该 context 内，
+     导致弹窗遮罩盖不住同页面的重置按钮。 */
 }
 
 .demo__status {
