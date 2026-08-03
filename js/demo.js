@@ -6,17 +6,16 @@
 
   const widgetHost = document.getElementById('demoWidget');
   const statusEl = document.getElementById('demoStatus');
-  const runBtn = document.getElementById('demoRun');
+  const resetBtn = document.getElementById('demoRun');
   const tabButtons = Array.prototype.slice.call(document.querySelectorAll('#demoTabs [data-kind]'));
-  if (!widgetHost || !statusEl || !runBtn) return;
+  if (!widgetHost || !statusEl || !resetBtn) return;
 
   const IS_EN = /^en/i.test(document.documentElement.lang);
   const T = {
+    idle: IS_EN ? 'Idle · click the button below to start' : '待命 · 点击下方按钮开始验证',
     analyzing: IS_EN ? 'Analyzing…' : '分析中…',
     verified: IS_EN ? 'Verified · token ' : '验证通过 · token ',
     error: IS_EN ? 'Error · ' : '错误 · ',
-    picked: IS_EN ? 'Selected: ' : '已选择：',
-    startHint: IS_EN ? ' · press Start' : '，点击开始验证',
     state: {
       idle: IS_EN ? 'Idle' : '待命',
       analyzing: IS_EN ? 'Analyzing behavior…' : '行为分析中…',
@@ -35,6 +34,11 @@
 
   let widget = null;
 
+  function currentKind() {
+    const active = document.querySelector('#demoTabs [data-kind][aria-selected="true"]');
+    return active ? active.dataset.kind : 'slider';
+  }
+
   function setStatus(text) {
     statusEl.textContent = text;
   }
@@ -45,17 +49,14 @@
       widget = null;
     }
     widgetHost.replaceChildren();
-    setStatus(T.analyzing);
-    const active = document.querySelector('#demoTabs [data-kind][aria-selected="true"]');
-    const kind = active ? active.dataset.kind : 'slider';
+    setStatus(T.idle);
     widget = Corptcha.render(widgetHost, {
       apiBaseUrl: API_BASE_URL,
       siteKey: DEMO_SITE_KEY,
       purpose: 'demo',
-      challengeKind: kind,
+      challengeKind: currentKind(),
       language: IS_EN ? 'en' : 'zh-CN',
       theme: { mode: 'auto' },
-      autoExecute: true,
       onStateChange: function (state) {
         if (!state) return;
         setStatus(T.state[state.name] || state.name);
@@ -74,9 +75,9 @@
       tabButtons.forEach(function (b) {
         b.setAttribute('aria-selected', String(b === btn));
       });
-      setStatus(T.picked + btn.textContent + T.startHint);
+      mount();
     });
   });
 
-  runBtn.addEventListener('click', mount);
+  resetBtn.addEventListener('click', mount);
 })();
