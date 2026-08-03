@@ -80,4 +80,7 @@
   });
 
   resetBtn.addEventListener('click', mount);
+
+  // 初始渲染默认选中的挑战按钮
+  mount();
 })();
